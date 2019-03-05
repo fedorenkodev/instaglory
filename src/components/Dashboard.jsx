@@ -4,6 +4,7 @@ import {Grid, Typography, Paper, Table, TableHead, TableBody, TableRow, TableCel
 
 import CardItem from "./CardItem";
 import NewsWidget from "./NewsWidget";
+import OrdersTable from "./OrdersTable";
 
 const styles = theme => ({
     ...theme.mixins.gutters(),
@@ -25,7 +26,8 @@ const styles = theme => ({
     },
 
     totalsWrapper: {
-        marginBottom: 60
+        marginBottom: 30,
+        marginTop: 15
     },
 
     totalOrdersCount: {
@@ -44,55 +46,10 @@ const styles = theme => ({
         color: "#f4516c"
     },
 
-    table: {
-        minWidth: 700,
+    newsWrapper: {
+        marginBottom: 30,
     },
 });
-
-const rows = [
-    {
-        id: 1,
-        service: 'Free fast likes',
-        status: 'In progress',
-        link: 'https://instagram.com/solvendofuit',
-        date: '25.02.2018'
-    },
-    {
-        id: 2,
-        service: 'Free fast subscribers',
-        status: 'Completed',
-        link: 'https://instagram.com/solvendofuit',
-        date: '23.02.2018'
-    },
-    {
-        id: 3,
-        service: 'Free fast likes',
-        status: 'Completed',
-        link: 'https://instagram.com/solvendofuit',
-        date: '22.02.2018'
-    },
-    {
-        id: 4,
-        service: 'Free fast likes',
-        status: 'Canceled',
-        link: 'https://instagram.com/solvendofuit',
-        date: '19.02.2018'
-    },
-    {
-        id: 5,
-        service: 'Free fast likes',
-        status: 'Completed',
-        link: 'https://instagram.com/solvendofuit',
-        date: '18.02.2018'
-    },
-];
-
-const CustomTableCell = withStyles(theme => ({
-    body: {
-        fontSize: 14,
-        padding: 15
-    },
-}))(TableCell);
 
 class Dashboard extends React.Component {
     state = {
@@ -125,6 +82,13 @@ class Dashboard extends React.Component {
                 hex: '#f4516c',
                 cardIcon: 'supervisor_account'
             },
+        ],
+        orders: [
+            ["1", "Test Service 1", 500, "https://instagram.com/solvendofuit", 141.11, "pending", "27.02.2018"],
+            ["2", "Test Service 2", 32, "https://instagram.com/solvendofuit", 113.12, "completed", "27.02.2018"],
+            ["3", "Test Service 2", 111, "https://instagram.com/solvendofuit", 133.00, "in_progress", "27.02.2018"],
+            ["4", "Test Service 4", 900, "https://instagram.com/solvendofuit", 132.01, "in_progress", "27.02.2018"],
+            ["5", "Test Service 4", 600, "https://instagram.com/solvendofuit", 133.00, "in_progress", "24.02.2018"],
         ]
     };
 
@@ -145,41 +109,20 @@ class Dashboard extends React.Component {
                             </Grid>)
                     }
                 </Grid>
-                <Grid container justify="flex-start" className={classes.totalsWrapper} spacing={16}>
-                    <Grid item xs={12} sm={12} md={5} lg={5}>
-                        <Typography variant="h5" gutterBottom={15}>
+                <Grid container justify="flex-start" spacing={16}>
+                    <Grid item className={classes.newsWrapper} xs={12}>
+                        <Typography variant="h5" gutterBottom>
                             News
                         </Typography>
                         <Paper className={classes.root} elevation={2}>
                             <NewsWidget />
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={7} lg={7}>
-                        <Typography variant="h5" gutterBottom={15}>
+                    <Grid item xs={12}>
+                        <Typography variant="h5" gutterBottom>
                             Last orders
                         </Typography>
-                        <Paper className={classes.root} elevation={2}>
-                            <Table className={classes.table}>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell align="left">Service</TableCell>
-                                        <TableCell align="left">Status</TableCell>
-                                        <TableCell align="left">Link</TableCell>
-                                        <TableCell align="left">Date</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {rows.map(row => (
-                                        <TableRow key={row.id}>
-                                            <CustomTableCell align="left" scope="row">{row.service}</CustomTableCell>
-                                            <CustomTableCell align="left">{row.status}</CustomTableCell>
-                                            <CustomTableCell align="left">{row.link}</CustomTableCell>
-                                            <CustomTableCell align="left">{row.date}</CustomTableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </Paper>
+                        <OrdersTable orders={this.state.orders}/>
                     </Grid>
                 </Grid>
             </>

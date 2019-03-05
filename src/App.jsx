@@ -6,6 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
 
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Dashboard from "./components/Dashboard";
+import OrdersList from "./components/OrdersList";
 import CreateOrder from "./components/CreateOrder";
 
 
@@ -33,6 +34,7 @@ class App extends React.Component {
                     <main className={classes.content}>
                         <div className={classes.appBarSpacer} />
                         <Route exact path="/" component={Dashboard} />
+                        <Route path="/orders-list" component={OrdersList} />
                         <Route path="/create-order" component={CreateOrder} />
                     </main>
                 </div>

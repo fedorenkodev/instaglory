@@ -70,7 +70,7 @@ class SideBarMenu extends React.Component {
                             <ListItemIcon>
                                 <AddIcon />
                             </ListItemIcon>
-                            <ListItemText inset primary="New order"/>
+                            <ListItemText inset primary="Create order"/>
                         </MenuItem>
                         <MenuItem button className={classes.nested}>
                             <ListItemIcon>
@@ -78,7 +78,7 @@ class SideBarMenu extends React.Component {
                             </ListItemIcon>
                             <ListItemText inset primary="Bulk order"/>
                         </MenuItem>
-                        <MenuItem button className={classes.nested}>
+                        <MenuItem component={Link} to='/orders-list' button className={classes.nested} selected={location.pathname === '/orders-list'}>
                             <ListItemIcon>
                                 <ListAltIcon />
                             </ListItemIcon>
