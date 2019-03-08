@@ -84,11 +84,11 @@ class Dashboard extends React.Component {
             },
         ],
         orders: [
-            ["1", "Test Service 1", 500, "https://instagram.com/solvendofuit", 141.11, "pending", "27.02.2018"],
-            ["2", "Test Service 2", 32, "https://instagram.com/solvendofuit", 113.12, "completed", "27.02.2018"],
-            ["3", "Test Service 2", 111, "https://instagram.com/solvendofuit", 133.00, "in_progress", "27.02.2018"],
-            ["4", "Test Service 4", 900, "https://instagram.com/solvendofuit", 132.01, "in_progress", "27.02.2018"],
-            ["5", "Test Service 4", 600, "https://instagram.com/solvendofuit", 133.00, "in_progress", "24.02.2018"],
+            ["1", "Test Service 1", 500, "https://instagram.com/solvendofuit", 141.11, "27.02.2018", "pending"],
+            ["2", "Test Service 2", 32, "https://instagram.com/solvendofuit", 113.12, "27.02.2018", "completed"],
+            ["3", "Test Service 2", 111, "https://instagram.com/solvendofuit", 133.00, "27.02.2018", "in_progress"],
+            ["4", "Test Service 4", 900, "https://instagram.com/solvendofuit", 132.01, "27.02.2018", "in_progress"],
+            ["5", "Test Service 4", 600, "https://instagram.com/solvendofuit", 133.00, "24.02.2018", "in_progress"],
         ]
     };
 

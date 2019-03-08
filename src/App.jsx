@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Dashboard from "./components/Dashboard";
 import OrdersList from "./components/OrdersList";
 import CreateOrder from "./components/CreateOrder";
+import AutoOrdersList from "./components/AutoOrdersList";
 
 
 const styles = (theme) => ({
@@ -36,6 +37,7 @@ class App extends React.Component {
                         <Route exact path="/" component={Dashboard} />
                         <Route path="/orders-list" component={OrdersList} />
                         <Route path="/create-order" component={CreateOrder} />
+                        <Route path="/auto-orders-list" component={AutoOrdersList} />
                     </main>
                 </div>
             </Router>

@@ -3,7 +3,7 @@ import MUIDataTable from "mui-datatables";
 
 import {Chip} from '@material-ui/core'
 
-class OrdersTable extends React.Component {
+class AutoOrdersTable extends React.Component {
     render() {
         const columns = [
             {
@@ -21,22 +21,15 @@ class OrdersTable extends React.Component {
                 }
             },
             {
-                name: "quantity",
-                label: "Quantity",
+                name: "login",
+                label: "Login Instagram",
                 options: {
                     filter: false
                 }
             },
             {
-                name: "link",
-                label: "Link",
-                options: {
-                    filter: false
-                }
-            },
-            {
-                name: "price",
-                label: "Price",
+                name: "type",
+                label: "Type",
                 options: {
                     filter: false
                 }
@@ -81,7 +74,7 @@ class OrdersTable extends React.Component {
 
         return (
             <MUIDataTable
-                title={"Orders"}
+                title={"Auto orders"}
                 data={this.props.orders}
                 columns={columns}
                 options={options}
@@ -90,4 +83,4 @@ class OrdersTable extends React.Component {
     }
 }
 
-export default OrdersTable;
+export default AutoOrdersTable;

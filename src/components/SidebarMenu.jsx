@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {MenuList, List, ListItem, MenuItem, ListItemIcon, ListItemText} from '@material-ui/core'
+import {MenuList, List, MenuItem, ListItemIcon, ListItemText} from '@material-ui/core'
 
 import { withStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
@@ -10,10 +10,9 @@ import AddIcon from '@material-ui/icons/Add';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import BorderColor from '@material-ui/icons/BorderColor';
-import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import AttouchMoneyIcon from '@material-ui/icons/AttachMoney';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import DvrIcon from '@material-ui/icons/Dvr';
@@ -33,11 +32,16 @@ const styles = theme => ({
 class SideBarMenu extends React.Component {
     state = {
         openOrder: false,
-        openSupport: false
+        openSupport: false,
+        openAutoOrder: false,
     };
 
     handleOrderClick = () => {
         this.setState(state => ({ openOrder: !state.openOrder }));
+    };
+
+    handleAutoOrderClick = () => {
+        this.setState(state => ({ openAutoOrder: !state.openAutoOrder }));
     };
 
     handleSupportClick = () => {
@@ -72,38 +76,53 @@ class SideBarMenu extends React.Component {
                             </ListItemIcon>
                             <ListItemText inset primary="Create order"/>
                         </MenuItem>
-                        <MenuItem button className={classes.nested}>
-                            <ListItemIcon>
-                                <FormatListNumberedIcon />
-                            </ListItemIcon>
-                            <ListItemText inset primary="Bulk order"/>
-                        </MenuItem>
                         <MenuItem component={Link} to='/orders-list' button className={classes.nested} selected={location.pathname === '/orders-list'}>
                             <ListItemIcon>
                                 <ListAltIcon />
                             </ListItemIcon>
                             <ListItemText inset primary="All orders"/>
                         </MenuItem>
-                        <MenuItem button className={classes.nested}>
+                    </List>
+                </Collapse>
+
+                <MenuItem button onClick={this.handleAutoOrderClick}>
+                    <ListItemIcon>
+                        <AutorenewIcon/>
+                    </ListItemIcon>
+                    <ListItemText inset primary="Auto orders"/>
+                    {this.state.openAutoOrder ? <ExpandLess/> : <ExpandMore/>}
+                </MenuItem>
+                <Collapse in={this.state.openAutoOrder} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <MenuItem component={Link} to='/create-auto-order' button className={classes.nested} selected={location.pathname === '/create-auto-order'}>
                             <ListItemIcon>
-                                <AutorenewIcon />
+                                <AddIcon />
                             </ListItemIcon>
-                            <ListItemText inset primary="Auto orders"/>
+                            <ListItemText inset primary="Create order"/>
+                        </MenuItem>
+                        <MenuItem component={Link} to='/auto-orders-list' button className={classes.nested} selected={location.pathname === '/auto-orders-list'}>
+                            <ListItemIcon>
+                                <ListAltIcon />
+                            </ListItemIcon>
+                            <ListItemText inset primary="All orders"/>
                         </MenuItem>
                     </List>
                 </Collapse>
+
                 <MenuItem button>
                     <ListItemIcon>
-                        <LibraryBooks/>
+                        <AttouchMoneyIcon />
                     </ListItemIcon>
-                    <ListItemText inset primary="Blog"/>
+                    <ListItemText inset primary="Transactions"/>
                 </MenuItem>
+
                 <MenuItem button>
                     <ListItemIcon>
                         <DvrIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="News"/>
                 </MenuItem>
+
                 <MenuItem button onClick={this.handleSupportClick}>
                     <ListItemIcon>
                         <ContactSupportIcon />

@@ -1,7 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import {Paper, Grid, Typography, TextField, MenuItem, Tooltip, Button, Chip, withStyles} from '@material-ui/core';
+import {
+    Paper, Grid, Typography,
+    TextField, MenuItem, Tooltip,
+    Button, Chip, FormControlLabel,
+    Checkbox, withStyles
+} from '@material-ui/core';
 
 const styles = (theme) => ({
     paper: {
@@ -81,6 +86,22 @@ const styles = (theme) => ({
     serviceTotalPrice:{
         fontSize: 15,
         marginTop: 20
+    },
+
+    additionalInfo: {
+        fontWeight: 300,
+        paddingLeft: 15,
+        lineHeight: '25px',
+        marginBottom: 0,
+        marginTop: 30,
+    },
+
+    checkbox: {
+        paddingTop: 10
+    },
+
+    hidden: {
+        display: 'none',
     },
 });
 
@@ -214,7 +235,13 @@ const serviceGroups = [
     },
 ];
 
-class OrdersList extends React.Component {
+class CreateOrder extends React.Component {
+    constructor(props) {
+        super(props) ;
+
+        this.handleChangeBulkOrder = this.handleChangeBulkOrder.bind(this);
+    }
+
     state = {
         selectedServiceGroup: '',
         selectedService: '',
@@ -225,6 +252,9 @@ class OrdersList extends React.Component {
         totalPrice: 0,
         countError: false,
         countErrorText: '',
+        isBulkOrder: false,
+        multiline: false,
+        rows: 1,
     };
 
     componentWillMount() {
@@ -251,6 +281,7 @@ class OrdersList extends React.Component {
             serviceList: serviceList,
             selectedService: serviceList[0].value,
             serviceInfo: serviceList[0].options,
+            serviceName: serviceList[0].label
         });
     };
 
@@ -295,6 +326,15 @@ class OrdersList extends React.Component {
         });
     };
 
+
+    handleChangeBulkOrder() {
+        this.setState({
+            isBulkOrder: !this.state.isBulkOrder,
+            multiline: !this.state.multiline,
+            rows: 5,
+        });
+    };
+
     render() {
         const {classes} = this.props;
         return (
@@ -336,8 +376,29 @@ class OrdersList extends React.Component {
                         <TextField
                             required
                             type={"email"}
-                            label="Link"
+                            label={this.state.multiline ? 'Links' : 'Link'}
                             className={classes.textField}
+                            multiline={this.state.multiline}
+                            placeholder={this.state.multiline ? 'https://www.instagram.com/hello/\nhttps://www.instagram.com/world/' : ''}
+                            rows={this.state.rows}
+                            rowsMax={10}
+                        />
+                        <Typography className={classNames({
+                            [classes.hidden]: !this.state.multiline,
+                        })}>
+                            1 link - 1 line.
+                        </Typography>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.isBulkOrder}
+                                    onChange={this.handleChangeBulkOrder}
+                                    value="bulkOrder"
+                                    color="primary"
+                                    className={classes.checkbox}
+                                />
+                            }
+                            label="Bulk order"
                         />
                         <TextField
                             required
@@ -407,10 +468,24 @@ class OrdersList extends React.Component {
                             className={classNames(classes.serviceAdditionalInfoChip, classes.serviceTotalPrice)}
                             label={"Total price: " + this.state.totalPrice + "$"} />
                     </Grid>
+                    <Grid item xs={12}>
+                        <ol className={classes.additionalInfo}>
+                            <li>
+                                Your Instagram account must be open.
+                            </li>
+                            <li>
+                                Do not order several services, or the same service to the link, for which there is still an unfulfilled order.
+                            </li>
+                            <li>
+                                If you have questions about work, please refer to the FAQ. If in the FAQ you did not find the answer to your question - <a
+                                href="#">contact support</a>.
+                            </li>
+                        </ol>
+                    </Grid>
                 </Grid>
             </Paper>
         );
     }
 }
 
-export default withStyles(styles)(OrdersList);
+export default withStyles(styles)(CreateOrder);
