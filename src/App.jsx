@@ -8,7 +8,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Dashboard from "./components/Dashboard";
 import OrdersList from "./components/OrdersList";
 import CreateOrder from "./components/CreateOrder";
-import AutoOrdersList from "./components/AutoOrdersList";
+/*import CreateAutoOrder from "./components/CreateAutoOrder";
+import AutoOrdersList from "./components/AutoOrdersList";*/
+import ServicesList from "./components/ServicesList";
 
 
 const styles = (theme) => ({
@@ -36,8 +38,12 @@ class App extends React.Component {
                         <div className={classes.appBarSpacer} />
                         <Route exact path="/" component={Dashboard} />
                         <Route path="/orders-list" component={OrdersList} />
-                        <Route path="/create-order" component={CreateOrder} />
-                        <Route path="/auto-orders-list" component={AutoOrdersList} />
+                        <Route exact path="/create-order" component={CreateOrder} />
+                        <Route path="/create-order/:groupId/:serviceId" component={CreateOrder} />
+                        <Route path="/services-list" component={ServicesList} />
+
+                        {/*<Route path="/auto-orders-list" component={AutoOrdersList} />
+                        <Route path="/create-auto-order" component={CreateAutoOrder} />*/}
                     </main>
                 </div>
             </Router>

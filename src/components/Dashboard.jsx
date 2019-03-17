@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Grid, Typography, Paper, Table, TableHead, TableBody, TableRow, TableCell, withStyles} from "@material-ui/core";
+import {Grid, Typography, Paper, withStyles} from "@material-ui/core";
 
 import CardItem from "./CardItem";
 import NewsWidget from "./NewsWidget";

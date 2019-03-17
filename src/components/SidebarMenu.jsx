@@ -13,7 +13,8 @@ import BorderColor from '@material-ui/icons/BorderColor';
 import AttouchMoneyIcon from '@material-ui/icons/AttachMoney';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import AutorenewIcon from '@material-ui/icons/Autorenew';
+/*import AutorenewIcon from '@material-ui/icons/Autorenew';*/
+import TocIcon from '@material-ui/icons/Toc';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import DvrIcon from '@material-ui/icons/Dvr';
 
@@ -85,7 +86,7 @@ class SideBarMenu extends React.Component {
                     </List>
                 </Collapse>
 
-                <MenuItem button onClick={this.handleAutoOrderClick}>
+                {/*<MenuItem button onClick={this.handleAutoOrderClick}>
                     <ListItemIcon>
                         <AutorenewIcon/>
                     </ListItemIcon>
@@ -107,7 +108,14 @@ class SideBarMenu extends React.Component {
                             <ListItemText inset primary="All orders"/>
                         </MenuItem>
                     </List>
-                </Collapse>
+                </Collapse>*/}
+
+                <MenuItem component={Link} to='/services-list' button selected={location.pathname === '/services-list'}>
+                    <ListItemIcon>
+                        <TocIcon />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Services"/>
+                </MenuItem>
 
                 <MenuItem button>
                     <ListItemIcon>

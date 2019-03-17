@@ -107,10 +107,12 @@ const styles = (theme) => ({
 
 const serviceGroups = [
     {
+        id: 1,
         value: 'likes',
         label: 'Likes',
         services: [
             {
+                id: 11,
                 value: 'likes1',
                 label: 'Likes fast | 1$ for 1000',
                 options: {
@@ -123,6 +125,7 @@ const serviceGroups = [
                 }
             },
             {
+                id: 22,
                 value: 'likes2',
                 label: 'Likes fast | 2$ for 1000',
                 options: {
@@ -135,6 +138,7 @@ const serviceGroups = [
                 }
             },
             {
+                id: 33,
                 value: 'likes3',
                 label: 'Likes fast | 3$ for 1000',
                 options: {
@@ -149,10 +153,12 @@ const serviceGroups = [
         ]
     },
     {
+        id: 2,
         value: 'free_likes',
         label: 'Free likes',
         services: [
             {
+                id: 44,
                 value: 'free_likes1',
                 label: 'Free fast | 1$ for 100',
                 options: {
@@ -165,6 +171,7 @@ const serviceGroups = [
                 }
             },
             {
+                id: 55,
                 value: 'free_likes2',
                 label: 'Free fast | 2$ for 200',
                 options: {
@@ -177,6 +184,7 @@ const serviceGroups = [
                 }
             },
             {
+                id: 66,
                 value: 'free_likes3',
                 label: 'Free fast | 3$ for 300',
                 options: {
@@ -191,10 +199,12 @@ const serviceGroups = [
         ]
     },
     {
+        id: 3,
         value: 'subscribers',
         label: 'Subscribers',
         services: [
             {
+                id: 77,
                 value: 'subscribers1',
                 label: 'Subscribers very fast | 1$ for 1000',
                 options: {
@@ -207,6 +217,7 @@ const serviceGroups = [
                 }
             },
             {
+                id: 88,
                 value: 'subscribers2',
                 label: 'Subscribers very fast | 2$ for 3000',
                 options: {
@@ -219,6 +230,7 @@ const serviceGroups = [
                 }
             },
             {
+                id: 99,
                 value: 'subscribers3',
                 label: 'Subscribers very fast | 3$ for 4000',
                 options: {
@@ -258,13 +270,52 @@ class CreateOrder extends React.Component {
     };
 
     componentWillMount() {
+        const {match} = this.props;
+
+        let selectedServiceGroup = serviceGroups[0];
+        let selectedService =  selectedServiceGroup.services[0];
+
+        if (match.params.groupId) {
+            let foundServiceGroup = this.findServiceGroup(parseInt(match.params.groupId)).pop();
+            if (foundServiceGroup) {
+                selectedServiceGroup = foundServiceGroup;
+            }
+
+            if (match.params.serviceId) {
+                let foundService = this.findService(selectedServiceGroup.services, parseInt(match.params.serviceId)).pop();
+                if (foundService) {
+                    selectedService = foundService;
+                }
+            }
+        }
+
         this.setState({
-            selectedServiceGroup: serviceGroups[0].value,
-            selectedService: serviceGroups[0].services[0].value,
-            serviceList: serviceGroups[0].services,
-            serviceInfo: serviceGroups[0].services[0].options,
-            serviceName: serviceGroups[0].services[0].label
+            selectedServiceGroup: selectedServiceGroup.value,
+            selectedService: selectedService.value,
+            serviceList: selectedServiceGroup.services,
+            serviceInfo: selectedService.options,
+            serviceName: selectedService.label
         });
+    }
+
+    componentDidMount() {
+        console.log(this.props);
+    }
+
+    findServiceGroup(id) {
+        return serviceGroups.filter((item) => {
+            if (item.id === id) {
+                return item;
+            }
+        })
+    }
+
+    findService(services, serviceId) {
+        return services.filter((item) => {
+            if (item.id === serviceId) {
+                return item;
+            }
+        })
     }
 
     handleChangeServiceGroup = () => event => {
@@ -325,7 +376,6 @@ class CreateOrder extends React.Component {
             countErrorText: errorText
         });
     };
-
 
     handleChangeBulkOrder() {
         this.setState({
