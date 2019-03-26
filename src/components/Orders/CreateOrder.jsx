@@ -299,23 +299,23 @@ class CreateOrder extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
+
     }
 
     findServiceGroup(id) {
-        return serviceGroups.filter((item) => {
-            if (item.id === id) {
-                return item;
-            }
-        })
+        return serviceGroups.filter((item) =>
+            item.id === id
+                ? item
+                : false
+        );
     }
 
     findService(services, serviceId) {
-        return services.filter((item) => {
-            if (item.id === serviceId) {
-                return item;
-            }
-        })
+        return services.filter((item) =>
+            item.id === serviceId
+                ? item
+                : false
+        );
     }
 
     handleChangeServiceGroup = () => event => {
@@ -528,7 +528,7 @@ class CreateOrder extends React.Component {
                             </li>
                             <li>
                                 If you have questions about work, please refer to the FAQ. If in the FAQ you did not find the answer to your question - <a
-                                href="#">contact support</a>.
+                                href="google.com">contact support</a>.
                             </li>
                         </ol>
                     </Grid>

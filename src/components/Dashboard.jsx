@@ -4,7 +4,7 @@ import {Grid, Typography, Paper, withStyles} from "@material-ui/core";
 
 import CardItem from "./CardItem";
 import NewsWidget from "./NewsWidget";
-import OrdersTable from "./OrdersTable";
+import OrdersTable from "./Orders/OrdersTable";
 
 const styles = theme => ({
     ...theme.mixins.gutters(),

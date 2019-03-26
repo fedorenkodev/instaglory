@@ -11,3 +11,21 @@ body {
   width: calc(100% - 300px);
   transition: all .3s ease;
 }
+
+ol.agreement {
+  counter-reset: item;
+  margin: 10px 20px;
+  padding: 0;
+}
+
+ol.agreement  li {
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+ol.agreement  li:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item
+}

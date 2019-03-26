@@ -35,6 +35,7 @@ class SideBarMenu extends React.Component {
         openOrder: false,
         openSupport: false,
         openAutoOrder: false,
+        openTransactions: false,
     };
 
     handleOrderClick = () => {
@@ -47,6 +48,10 @@ class SideBarMenu extends React.Component {
 
     handleSupportClick = () => {
         this.setState(state => ({ openSupport: !state.openSupport }));
+    };
+
+    handleTransactionClick = () => {
+        this.setState(state => ({ openTransactions: !state.openTransactions }));
     };
 
     render() {
@@ -77,11 +82,11 @@ class SideBarMenu extends React.Component {
                             </ListItemIcon>
                             <ListItemText inset primary="Create order"/>
                         </MenuItem>
-                        <MenuItem component={Link} to='/orders-list' button className={classes.nested} selected={location.pathname === '/orders-list'}>
+                        <MenuItem component={Link} to='/orders' button className={classes.nested} selected={location.pathname === '/orders'}>
                             <ListItemIcon>
                                 <ListAltIcon />
                             </ListItemIcon>
-                            <ListItemText inset primary="All orders"/>
+                            <ListItemText inset primary="Archive"/>
                         </MenuItem>
                     </List>
                 </Collapse>
@@ -110,19 +115,36 @@ class SideBarMenu extends React.Component {
                     </List>
                 </Collapse>*/}
 
-                <MenuItem component={Link} to='/services-list' button selected={location.pathname === '/services-list'}>
+                <MenuItem component={Link} to='/services' button selected={location.pathname === '/services'}>
                     <ListItemIcon>
                         <TocIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="Services"/>
                 </MenuItem>
 
-                <MenuItem button>
+                <MenuItem button onClick={this.handleTransactionClick}>
                     <ListItemIcon>
                         <AttouchMoneyIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="Transactions"/>
+                    {this.state.openTransactions ? <ExpandLess/> : <ExpandMore/>}
                 </MenuItem>
+                <Collapse in={this.state.openTransactions} timeout="auto" unmountOnExit>
+                    <MenuList component="div" disablePadding>
+                        <MenuItem component={Link} to='/create-transaction' button selected={location.pathname === '/create-transaction'} className={classes.nested}>
+                            <ListItemIcon>
+                                <AddIcon />
+                            </ListItemIcon>
+                            <ListItemText inset primary="Refill"/>
+                        </MenuItem>
+                        <MenuItem component={Link} to='/transactions' button selected={location.pathname === '/transactions'} className={classes.nested}>
+                            <ListItemIcon>
+                                <ListAltIcon />
+                            </ListItemIcon>
+                            <ListItemText inset primary="Archive"/>
+                        </MenuItem>
+                    </MenuList>
+                </Collapse>
 
                 <MenuItem button>
                     <ListItemIcon>
@@ -140,13 +162,13 @@ class SideBarMenu extends React.Component {
                 </MenuItem>
                 <Collapse in={this.state.openSupport} timeout="auto" unmountOnExit>
                     <MenuList component="div" disablePadding>
-                        <MenuItem button className={classes.nested}>
+                        <MenuItem component={Link} to='/create-ticket' button selected={location.pathname === '/create-ticket'} className={classes.nested}>
                             <ListItemIcon>
                                 <AddIcon />
                             </ListItemIcon>
                             <ListItemText inset primary="New ticket"/>
                         </MenuItem>
-                        <MenuItem button className={classes.nested}>
+                        <MenuItem component={Link} to='/tickets' button selected={location.pathname === '/tickets'} className={classes.nested}>
                             <ListItemIcon>
                                 <ListAltIcon />
                             </ListItemIcon>

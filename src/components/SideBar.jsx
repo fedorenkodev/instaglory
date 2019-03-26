@@ -10,7 +10,7 @@ import {
     Badge,
     Drawer,
     Divider,
-    withStyles, ListItemText,
+    withStyles, ListItemText, Button,
 } from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import classNames from 'classnames';
@@ -27,6 +27,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener/ClickAwayListener";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import {Link} from "react-router-dom";
+import Fade from "@material-ui/core/Fade";
 
 const drawerWidth = 240;
 
@@ -126,14 +127,98 @@ const styles = theme => ({
 
     avatarShift: {
         marginRight: "24px",
+    },
+
+    notificationIcon: {
+        marginRight: 0
+    },
+
+    notificationPopup: {
+        zIndex: 10,
+    },
+
+    notificationViewAll: {
+        display: 'block',
+        width: '100%',
+        background: 'none',
+        fontSize: 12,
+        padding: '4px 0',
+        textAlign: 'center',
+    },
+
+    arrow: {
+        position: 'absolute',
+        top: -7,
+        width: 0,
+        height: 0,
+        borderStyle: 'solid',
+        borderWidth: '0 9px 7px 9px',
+        borderColor: 'transparent transparent #ffffff transparent',
+    },
+
+    notificationItem: {
+        '&:hover': {
+            backgroundColor: '#eee',
+        }
+    },
+
+    dense: {
+        paddingTop: 8,
+    },
+
+    notifyType1: {
+        color: 'red !important',
+    },
+
+    notifyType2: {
+        color: 'blue',
+    },
+
+    notifyType3: {
+        color: 'green',
     }
 });
+
+const notifications = [
+    {
+        id: 1,
+        title: 'Welcome',
+        text: 'Welcome to the Instaglory!',
+        type: 1,
+    },
+    {
+        id: 2,
+        title: 'Some notification',
+        text: 'Read more text about it.',
+        type: 2,
+    },
+    {
+        id: 3,
+        title: 'Some notification 2',
+        text: 'Read more text about it 2.',
+        type: 3,
+    },
+    {
+        id: 4,
+        title: 'Some notification 3',
+        text: 'Read more text about it 3.',
+        type: 4,
+    },
+    {
+        id: 5,
+        title: 'Some notification 4',
+        text: 'Read more text about it 4.',
+        type: 4,
+    },
+];
 
 class SideBar extends React.Component {
     state = {
         open: true,
         profileAnchorEl: null,
-        profileOpen: false
+        notificationsAnchorEl: null,
+        profileOpen: false,
+        arrowRef: null,
     };
 
     handleDrawerOpenClose = ()  => {
@@ -149,6 +234,24 @@ class SideBar extends React.Component {
     handleProfilePopoverClose = () => {
         this.setState({
             profileAnchorEl: null
+        });
+    };
+
+    handleNotificationsOpen = (event) => {
+        this.setState({
+            notificationsAnchorEl: event.currentTarget
+        });
+    };
+
+    handleNotificationsPopoverClose = () => {
+        this.setState({
+            notificationsAnchorEl: null
+        });
+    };
+
+    handleArrowRef = node => {
+        this.setState({
+            arrowRef: node,
         });
     };
 
@@ -172,18 +275,91 @@ class SideBar extends React.Component {
                             <MenuIcon />
                         </IconButton>
 
-                        <Link to={"/"} className={classes.balance}>
+                        <Link to={"/create-transaction"} className={classes.balance}>
                             <Typography color="inherit" className={classes.balanceValue}>
                                 144.33
                             </Typography>
                             <AttachMoneyIcon />
                         </Link>
 
-                        <IconButton color="inherit">
+                        <IconButton color="inherit" onClick={this.handleNotificationsOpen}>
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
+
+                        <Popper
+                            open={Boolean(this.state.notificationsAnchorEl)}
+                            anchorEl={this.state.notificationsAnchorEl}
+                            className={classes.notificationPopup}
+                            disablePortal
+                            placement="bottom"
+                            transition
+                            modifiers={{
+                                flip: {
+                                    enabled: true,
+                                },
+                                preventOverflow: {
+                                    enabled: true,
+                                    boundariesElement: 'scrollParent',
+                                },
+                                arrow: {
+                                    enabled: true,
+                                    element: this.state.arrowRef,
+                                },
+                            }}
+                        >
+                            {({ TransitionProps }) => (
+                                <Fade {...TransitionProps} timeout={350}>
+                                    <Paper >
+                                        <span className={classes.arrow} ref={this.handleArrowRef} />
+                                        <ClickAwayListener onClickAway={this.handleNotificationsPopoverClose}>
+                                            <List dense className={classes.dense}>
+                                                {
+                                                    notifications.map((notification) => (
+                                                            <ListItem
+                                                                component={Link}
+                                                                to={`/notification-view/${notification.id}`}
+                                                                key={notification.id}
+                                                                className={classes.notificationItem}>
+                                                                <ListItemIcon className={classes.notificationIcon}>
+                                                                    <SettingsIcon
+                                                                        style={{
+                                                                            color: notification.type === 1
+                                                                                ? 'rgb(113, 106, 202)'
+                                                                                : notification.type === 2
+                                                                                    ? 'rgb(54, 163, 247)'
+                                                                                    : notification.type === 3
+                                                                                        ? 'rgb(52, 191, 163)'
+                                                                                        : notification.type === 4
+                                                                                            ? 'rgb(244, 81, 108)'
+                                                                                            : ''
+                                                                        }}
+                                                                    />
+                                                                </ListItemIcon>
+                                                                <ListItemText
+                                                                    primary={notification.title}
+                                                                    secondary={notification.text ? notification.text : null}
+                                                                />
+                                                            </ListItem>
+                                                        )
+                                                    )
+                                                }
+                                                <ListItem >
+                                                    <Button
+                                                        component={Link} to='/notifications'
+                                                        className={classes.notificationViewAll}
+                                                    >
+                                                        View all
+                                                    </Button>
+                                                </ListItem>
+                                            </List>
+                                        </ClickAwayListener>
+                                    </Paper>
+                                </Fade>
+                            )}
+                        </Popper>
+
                         <Avatar
                             className={classNames(classes.avatar, {
                                 [classes.avatarShift]: !this.state.open
@@ -194,14 +370,29 @@ class SideBar extends React.Component {
                             anchorEl={this.state.profileAnchorEl}
                             transition
                             disablePortal
+                            placement="bottom-end"
+                            modifiers={{
+                                flip: {
+                                    enabled: true,
+                                },
+                                preventOverflow: {
+                                    enabled: true,
+                                    boundariesElement: 'scrollParent',
+                                },
+                                arrow: {
+                                    enabled: true,
+                                    element: this.state.arrowRef,
+                                },
+                            }}
                         >
                             {({ TransitionProps, placement }) => (
                                 <Grow
                                     {...TransitionProps}
-                                    id="menu-list-grow"
+                                    id="profile-list-grow"
                                     style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
                                 >
                                     <Paper>
+                                        <span className={classes.arrow} ref={this.handleArrowRef} />
                                         <ClickAwayListener onClickAway={this.handleProfilePopoverClose}>
                                             <List>
                                                 <ListItem button>

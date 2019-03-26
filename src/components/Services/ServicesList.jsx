@@ -1,11 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
 
-import {
-    Paper, Grid, Typography,
-    TextField, MenuItem, Tooltip,
-    Button, Chip, withStyles
-} from '@material-ui/core';
+import {Grid, Button, withStyles} from '@material-ui/core';
 import {Link} from "react-router-dom";
 import ServicesTable from "./ServicesTable";
 

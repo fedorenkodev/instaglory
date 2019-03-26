@@ -72,7 +72,7 @@ const styles = theme => ({
         paddingLeft: 15,
         lineHeight: '40px',
         fontWeight: 600,
-        backgroundColor: '#f4f4f8',
+        backgroundColor: '#efefef',
     },
 
     scrollbar: {
